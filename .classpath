@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src/main/java"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jre1.8.0_45-64"/>
+	<classpathentry kind="lib" path="lib-full/ffmpeg-windows-x86_64.jar"/>
+	<classpathentry kind="lib" path="lib-full/ffmpeg.jar"/>
+	<classpathentry kind="lib" path="lib-full/javacpp-1.2-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="lib-full/javacv.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
