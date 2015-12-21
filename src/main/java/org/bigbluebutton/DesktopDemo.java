@@ -17,21 +17,21 @@ import static org.bytedeco.javacpp.avutil.*;
 
 public class DesktopDemo {
 
-  private static int framesToEncode = 560;
+  private static int framesToEncode = 620;
   private static int x = 0;
   private static int y = 0;
   
   public static void main(String[] args) throws IOException, 
                                                 AWTException, InterruptedException {
-    
-    
+       
     MyFFmpegFrameRecorder recorder = null;
     int height = 480;
     int width = 640;
     Dimension screenBounds;
     Double frameRate = 12.0;    
-    //String URL = "rtmp://192.168.23.23/live/foo/room2";
-    String URL = "out.mp4";
+    //String URL = "rtmp://192.168.23.36/video/room8-recorded";
+    //String URL = "rtmp://ritz-breakout.novalocal/deskshare/room2";
+    String URL = "out2.webm";
     
     screenBounds = Toolkit.getDefaultToolkit().getScreenSize();
     width = screenBounds.width;
@@ -57,30 +57,12 @@ public class DesktopDemo {
       System.out.println("Capturing width=[" + width + "] height=[" + height + "]");
 
       recorder = new MyFFmpegFrameRecorder(URL, width, height);
-      recorder.setFormat("flv");
       
-      ///
-      // Flash SVC2
-      //recorder.setVideoCodec(AV_CODEC_ID_FLASHSV2);
-      //recorder.setPixelFormat(AV_PIX_FMT_BGR24);
-      
-      // H264
-      recorder.setVideoCodec(AV_CODEC_ID_H264);
-      recorder.setPixelFormat(AV_PIX_FMT_YUV420P);
-      
+//      userSVC2(recorder);
+//      userH264(recorder);
+      useVP8(recorder);
       
       recorder.setFrameRate(frameRate);
-//      recorder.setVideoQuality(26);
-//    recorder.setVideoOption("f", "gdigrab");
-//    recorder.setVideoOption("i", "desktop");
-      recorder.setVideoOption("crf", "38");
-      recorder.setVideoOption("preset", "veryfast");
-      recorder.setVideoOption("tune", "zerolatency");
-      recorder.setVideoOption("intra-refresh", "1");
-//      recorder.setVideoOption("rtmp_buffer", "0");
-//      recorder.setVideoOption("rtmp_live", "live");
-//    recorder.setVideoOption("fflags", "nobuffer");
-          
       recorder.setGopSize(24);
 
       try {
@@ -162,4 +144,67 @@ public class DesktopDemo {
 
   }
   
+  private static void useVP8(MyFFmpegFrameRecorder recorder) {
+    // https://trac.ffmpeg.org/wiki/Encode/VP8
+    // http://askubuntu.com/questions/45231/how-to-make-webm-desktop-recordings
+    // vp8
+    recorder.setFormat("vp8");
+    recorder.setVideoCodec(AV_CODEC_ID_VP8);
+    recorder.setPixelFormat(AV_PIX_FMT_YUV420P);
+
+    //  recorder.setVideoQuality(26);
+    //recorder.setVideoOption("f", "gdigrab");
+    //recorder.setVideoOption("i", "desktop");
+//    recorder.setVideoOption("crf", "10");
+    //recorder.setVideoOption("preset", "veryfast");
+//    recorder.setVideoOption("qmax", "50");
+//    recorder.setVideoOption("qmin", "0");
+    //  recorder.setVideoOption("rtmp_buffer", "0");
+    //  recorder.setVideoOption("rtmp_live", "live");
+    //  recorder.setVideoOption("fflags", "nobuffer");
+    recorder.setVideoOption("deadline", "realtime");
+    recorder.setVideoOption("b", "5000000");
+    recorder.setVideoOption("minrate", "200000");
+    recorder.setVideoOption("maxrate", "10000000");
+    
+}
+  
+  private static void userSVC2(MyFFmpegFrameRecorder recorder) {
+      recorder.setFormat("flv");
+      
+      ///
+      // Flash SVC2
+      recorder.setVideoCodec(AV_CODEC_ID_FLASHSV2);
+      recorder.setPixelFormat(AV_PIX_FMT_BGR24);
+  
+      //  recorder.setVideoQuality(26);
+      //recorder.setVideoOption("f", "gdigrab");
+      //recorder.setVideoOption("i", "desktop");
+      recorder.setVideoOption("crf", "38");
+      recorder.setVideoOption("preset", "veryfast");
+      recorder.setVideoOption("tune", "zerolatency");
+      recorder.setVideoOption("intra-refresh", "1");
+      //  recorder.setVideoOption("rtmp_buffer", "0");
+      //  recorder.setVideoOption("rtmp_live", "live");
+      //  recorder.setVideoOption("fflags", "nobuffer");    
+  }
+  
+  private static void userH264(MyFFmpegFrameRecorder recorder) {
+    recorder.setFormat("flv");
+      
+    // H264
+    recorder.setVideoCodec(AV_CODEC_ID_H264);
+    recorder.setPixelFormat(AV_PIX_FMT_YUV420P);
+
+    //  recorder.setVideoQuality(26);
+    //recorder.setVideoOption("f", "gdigrab");
+    //recorder.setVideoOption("i", "desktop");
+    recorder.setVideoOption("crf", "38");
+    recorder.setVideoOption("preset", "veryfast");
+    recorder.setVideoOption("tune", "zerolatency");
+    recorder.setVideoOption("intra-refresh", "1");
+    //  recorder.setVideoOption("rtmp_buffer", "0");
+    //  recorder.setVideoOption("rtmp_live", "live");
+    //  recorder.setVideoOption("fflags", "nobuffer");    
+}
 }

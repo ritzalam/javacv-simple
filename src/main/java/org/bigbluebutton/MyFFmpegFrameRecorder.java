@@ -209,19 +209,27 @@ public class MyFFmpegFrameRecorder extends MyFrameRecorder {
         videoStream = null;
         got_video_packet = new int[1];
         
+        System.out.println("Publishing format = " + format);
+        
         /* auto detect the output format from the name. */
         String format_name = format == null || format.length() == 0 ? null : format;
+        System.out.println("Guessing format = " + format_name + " filename = " + filename);
         if ((outFormat = av_guess_format(format_name, filename, null)) == null) {
+            System.out.println("Guessing format from proto = " + format_name + " filename = " + filename);
             int proto = filename.indexOf("://");
             if (proto > 0) {
                 format_name = filename.substring(0, proto);
+                System.out.println("2 Guessing format from proto = " + format_name + " filename = " + filename);
             }
+            System.out.println("3 Guessing format from proto = " + format_name + " filename = " + filename);
             if ((outFormat = av_guess_format(format_name, filename, null)) == null) {
                 throw new Exception("av_guess_format() error: Could not guess output format for \"" + filename + "\" and " + format + " format.");
             }
         }
+        
         format_name = outFormat.name().getString();
-
+        System.out.println("******* Guessed format = " + format_name + " filename = " + filename);
+        
         /* allocate the output media context */
         if ((outFormatContext = avformat_alloc_context()) == null) {
             throw new Exception("avformat_alloc_context() error: Could not allocate format context");
