@@ -252,7 +252,9 @@ public class MyFFmpegFrameRecorder extends MyFrameRecorder {
                 outFormat.video_codec(AV_CODEC_ID_H263);
             } else if ("avi".equals(format_name)) {
                 outFormat.video_codec(AV_CODEC_ID_HUFFYUV);
-            }
+            } else if ("vp8".equals(format_name)) {
+              outFormat.video_codec(AV_CODEC_ID_VP8);
+          }
 
             /* find the video encoder */
             if ((video_codec = avcodec_find_encoder_by_name(videoCodecName)) == null &&

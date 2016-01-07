@@ -31,7 +31,10 @@ public class DesktopDemo {
     Double frameRate = 12.0;    
     //String URL = "rtmp://192.168.23.36/video/room8-recorded";
     //String URL = "rtmp://ritz-breakout.novalocal/deskshare/room2";
-    String URL = "out2.webm";
+    //String URL = "out2.webm";
+    //String URL = "out2.mp4";
+    //String URL = "rtp://ritz-breakout.novalocal/deskshare/room2";
+    String URL = "tcp://192.168.23.36:6060/video/room8-recorded.webm";
     
     screenBounds = Toolkit.getDefaultToolkit().getScreenSize();
     width = screenBounds.width;
@@ -147,6 +150,8 @@ public class DesktopDemo {
   private static void useVP8(MyFFmpegFrameRecorder recorder) {
     // https://trac.ffmpeg.org/wiki/Encode/VP8
     // http://askubuntu.com/questions/45231/how-to-make-webm-desktop-recordings
+    // HOWTO: Proper Screencasting on Linux (http://ubuntuforums.org/showthread.php?t=1392026&p=8746719#post8746719)
+    // http://wiki.webmproject.org/ffmpeg
     // vp8
     recorder.setFormat("vp8");
     recorder.setVideoCodec(AV_CODEC_ID_VP8);
@@ -197,8 +202,8 @@ public class DesktopDemo {
     recorder.setPixelFormat(AV_PIX_FMT_YUV420P);
 
     //  recorder.setVideoQuality(26);
-    //recorder.setVideoOption("f", "gdigrab");
-    //recorder.setVideoOption("i", "desktop");
+    recorder.setVideoOption("f", "gdigrab");
+    recorder.setVideoOption("i", "desktop");
     recorder.setVideoOption("crf", "38");
     recorder.setVideoOption("preset", "veryfast");
     recorder.setVideoOption("tune", "zerolatency");
