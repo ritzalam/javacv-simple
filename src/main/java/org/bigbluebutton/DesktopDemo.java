@@ -32,9 +32,9 @@ public class DesktopDemo {
     //String URL = "rtmp://192.168.23.36/video/room8-recorded";
     //String URL = "rtmp://ritz-breakout.novalocal/deskshare/room2";
     //String URL = "out2.webm";
-    //String URL = "out2.mp4";
+    String URL = "out2.mp4";
     //String URL = "rtp://ritz-breakout.novalocal/deskshare/room2";
-    String URL = "tcp://192.168.23.36:6060/video/room8-recorded.webm";
+    //String URL = "tcp://192.168.23.36:6060/video/room8-recorded.webm";
     
     screenBounds = Toolkit.getDefaultToolkit().getScreenSize();
     width = screenBounds.width;
@@ -62,8 +62,8 @@ public class DesktopDemo {
       recorder = new MyFFmpegFrameRecorder(URL, width, height);
       
 //      userSVC2(recorder);
-//      userH264(recorder);
-      useVP8(recorder);
+      userH264(recorder);
+//      useVP8(recorder);
       
       recorder.setFrameRate(frameRate);
       recorder.setGopSize(24);
@@ -114,13 +114,13 @@ public class DesktopDemo {
         long timestamp = now - startTime;
         recorder.setTimestamp(timestamp * 1000);
 
-//        System.out.println("i=[" + i + "] timestamp=[" + timestamp + "]");
+        System.out.println("i=[" + i + "] timestamp=[" + timestamp + "]");
         recorder.setFrameNumber(i);
        
         long ffmpegDuration = System.currentTimeMillis() - endCapture;
         long execDuration = (System.currentTimeMillis() - now);
             
-//         System.out.println("[ENCODER] encoded image " + i + " in " + execDuration);
+         System.out.println("[ENCODER] encoded image " + i + " in " + execDuration);
          i++;
         
           
@@ -131,7 +131,7 @@ public class DesktopDemo {
          } catch (InterruptedException e) {
             e.printStackTrace();
          }
-//         System.out.println("[ENCODER] captureTime=[" + captureDuration + "] ffmpeg=[" + ffmpegDuration + "] sleep=[" + sleepDuration + "]ms, sleepFramerate = [" + sleepFramerate + "]");
+         System.out.println("[ENCODER] captureTime=[" + captureDuration + "] ffmpeg=[" + ffmpegDuration + "] sleep=[" + sleepDuration + "]ms, sleepFramerate = [" + sleepFramerate + "]");
        }
 
        if (recorder != null) {
@@ -211,5 +211,5 @@ public class DesktopDemo {
     //  recorder.setVideoOption("rtmp_buffer", "0");
     //  recorder.setVideoOption("rtmp_live", "live");
     //  recorder.setVideoOption("fflags", "nobuffer");    
-}
+  }
 }
