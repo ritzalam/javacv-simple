@@ -1,14 +1,8 @@
 package org.bigbluebutton;
 
-import org.bigbluebutton.MyFrameRecorder.Exception;
 import org.bytedeco.javacpp.Loader;
-import org.bytedeco.javacpp.tools.Logger;
 import org.bytedeco.javacv.*;
-
-import java.io.IOException;
-
 import static org.bytedeco.javacpp.avcodec.*;
-import static org.bytedeco.javacpp.avformat.*;
 import static org.bytedeco.javacpp.avutil.*;
 
 public class ClientFFmpeg {
@@ -49,13 +43,18 @@ public class ClientFFmpeg {
         // TODO Auto-generated catch block
         e.printStackTrace();
       }
-
-        FFmpegFrameRecorder recorder = new FFmpegFrameRecorder("out3.mp4", grabber.getImageWidth(), grabber.getImageHeight());
+      
+      String h264file = "out3.mp4";
+      String svcfile = "out4.flv";
+      String filename = h264file;
+      
+        FFmpegFrameRecorder recorder = new FFmpegFrameRecorder(filename, grabber.getImageWidth(), grabber.getImageHeight());
         recorder.setFormat("flv");
         recorder.setFrameRate(frameRate);
         recorder.setGopSize(24);
         // H264
         userH264(recorder);
+        //useSVC2(recorder);
         
         try {
           recorder.start();

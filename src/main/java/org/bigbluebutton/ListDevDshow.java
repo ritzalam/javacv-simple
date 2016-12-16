@@ -1,6 +1,5 @@
 package org.bigbluebutton;
 
-import org.bigbluebutton.MyFrameRecorder.Exception;
 import org.bytedeco.javacpp.Loader;
 import org.bytedeco.javacv.*;
 
